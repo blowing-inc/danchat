@@ -15,20 +15,23 @@ public class DanMojiConfiguration {
 	private static final String danMojisPath = "./src/main/resources/danmojis";
 	private static final Logger logger = LoggerFactory.getLogger(DanMojiConfiguration.class);
 
-	public List<File> availableDanMojis;
+	private List<String> availableDanMojis;
 
 	public DanMojiConfiguration() {
 		File danMojisPathFile = new File(danMojisPath);
-		availableDanMojis = new ArrayList<>(Arrays.asList(danMojisPathFile.listFiles()));
+		List<File> availableDanMojiFiles = new ArrayList<>(Arrays.asList(danMojisPathFile.listFiles()));
+		this.availableDanMojis = new ArrayList<>();
 
-		logger.info(availableDanMojis.size() + " available DanMojis");
-		for (File danMoji : availableDanMojis) {
-			logger.info("  =>" + danMoji);
+		logger.info(availableDanMojiFiles.size() + " available DanMojis");
+		for (File danMojiFile : availableDanMojiFiles) {
+			String danMoji = danMojiFile.getName().split("\\.(?=[^\\.]+$)")[0];
+			logger.info("  " + danMoji);
+			this.availableDanMojis.add(danMoji);
 		}
 	}
 
 	@Bean
-	public List<File> getDanMojis() {
-		return availableDanMojis;
+	public List<String> getDanMojis() {
+		return this.availableDanMojis;
 	}
 }
