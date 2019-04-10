@@ -19,9 +19,9 @@ public class ChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
-    private List<File> availableDanMojis;
+    private List<String> availableDanMojis;
 
-    public ChatController(List<File> danMojiList) {
+    public ChatController(List<String> danMojiList) {
        this.availableDanMojis = danMojiList;
     }
 
@@ -31,11 +31,10 @@ public class ChatController {
 
         String content = chatMessage.getContent();
         // Filter messages for DanChat only
-        if(content.equals("dan")) {
+        if(!availableDanMojis.contains(content)) {
             logger.info("Invalid message: " + content);
             return null;
         }
-
         logger.info("RECV:  " + chatMessage.getSender() + ": " + chatMessage.getContent());
         return chatMessage;
     }
