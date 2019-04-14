@@ -40,7 +40,7 @@ public class AvailableController {
 
         return ResponseEntity.ok()
                 .contentLength(file.length())
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .contentType(MediaType.IMAGE_PNG)
                 .body(resource);
     }
 }
