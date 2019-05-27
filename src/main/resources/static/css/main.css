@@ -32,6 +32,11 @@ body:before {
     z-index: 0;
 }
 
+img.resize {
+  max-width:10%;
+  max-height:10%;
+}
+
 .clearfix:after {
     display: block;
     content: "";
@@ -48,6 +53,13 @@ body:before {
     font-size: 15px;
     border: 1px solid #c8c8c8;
 }
+
+.img-control {
+    max-width: 10%;
+    max-height: 10%;
+    border: 1px solid #c8c8c8;
+}
+
 
 .form-group {
     margin-bottom: 15px;
@@ -296,3 +308,4 @@ button.accent {
         font-size: 1.1em;
     }
 }
+

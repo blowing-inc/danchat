@@ -2,6 +2,7 @@ package chat.dan.danchat.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -32,9 +34,9 @@ public class AvailableController {
 
 
     @RequestMapping(path="/danmojis/{param}", method=RequestMethod.GET)
-    public ResponseEntity<Resource> downloadDanmoji(@PathVariable(value="param") String param) throws FileNotFoundException {
-        String path = "./src/main/resources/danmojis/%s";
-        File file = new File(String.format(path, param));
+    public ResponseEntity<Resource> downloadDanmoji(@PathVariable(value="param") String param) throws IOException {
+        String path = "danmojis/%s";
+        File file = new ClassPathResource(String.format(path, param)).getFile();
 
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
