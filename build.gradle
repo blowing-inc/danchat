@@ -1,7 +1,6 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.3.RELEASE'
 	id 'java'
-	id 'com.google.cloud.tools.jib' version '1.1.2'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -9,9 +8,6 @@ apply plugin: 'io.spring.dependency-management'
 group = 'chat.dan'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-
-jib.from.image = 'gcr.io/distroless/java:debug'
-jib.to.image = 'senorequeso/dan-chat:latest'
 
 repositories {
 	mavenCentral()
