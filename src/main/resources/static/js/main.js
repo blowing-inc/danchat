@@ -71,9 +71,9 @@ function onMessageReceived(payload) {
 	var message = JSON.parse(payload.body);
 
 	var messageElement = document.createElement('li');
-	
+
 	var messageHackB = true;
-	
+
 	if(message.type === 'JOIN') {
 		messageElement.classList.add('event-message');
 		message.content = message.sender + ' joined!';
@@ -98,31 +98,35 @@ function onMessageReceived(payload) {
 	}
 
 	var textElement = document.createElement('p');
-	
+
 	if(messageHackB){
-	var messageText = document.createTextNode(message.content);
-	textElement.appendChild(messageText);
-	messageElement.appendChild(textElement);
+		var messageText = document.createTextNode(message.content);
+		textElement.appendChild(messageText);
+		messageElement.appendChild(textElement);
 	}
-	
+
 	if(message.type === 'CHAT') {
 		var msgContent = message.content;
+		var msgContentArray = msgContent.split(',');
 
-		if (msgContent === "laughDan" || 
-				msgContent === "partyDan" ||
-				msgContent === "sexAppealDan" ||
-				msgContent === "shockedDan" ||
-				msgContent === "yeehawDan"){
+		for(var i = 0; i < msgContentArray.length; i++){
+			//TODO make this dynamic
+			if (msgContentArray[i] === "laughDan" || 
+					msgContentArray[i] === "partyDan" ||
+					msgContentArray[i] === "sexAppealDan" ||
+					msgContentArray[i] === "shockedDan" ||
+					msgContentArray[i] === "yeehawDan"){
 
-			var imgElement = document.createElement('img');
-			
-			imgElement.setAttribute("class","resize");
-			imgElement.src = "/danmojis/" + message.content + ".png"
-			
-			
-			//imgElement.height = "42";
-			//imgElement.width = "42";
-			messageElement.appendChild(imgElement);
+				var imgElement = document.createElement('img');
+
+				imgElement.setAttribute("class","resize");
+				imgElement.src = "/danmojis/" + msgContentArray[i] + ".png"
+
+
+				//imgElement.height = "42";
+				//imgElement.width = "42";
+				messageElement.appendChild(imgElement);
+			}
 		}
 	}
 
@@ -140,6 +144,12 @@ function getAvatarColor(messageSender) {
 	var index = Math.abs(hash % colors.length);
 	return colors[index];
 }
+
+function addStegs(emoji) { 
+	var txt=document.getElementById("message").value; 
+	txt = txt + emoji; 
+	document.getElementById("message").value = txt; 
+} 
 
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)
