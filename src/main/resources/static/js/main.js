@@ -110,23 +110,13 @@ function onMessageReceived(payload) {
 		var msgContentArray = msgContent.split(',');
 
 		for(var i = 0; i < msgContentArray.length; i++){
-			//TODO make this dynamic
-			if (msgContentArray[i] === "laughDan" || 
-					msgContentArray[i] === "partyDan" ||
-					msgContentArray[i] === "sexAppealDan" ||
-					msgContentArray[i] === "shockedDan" ||
-					msgContentArray[i] === "yeehawDan"){
 
-				var imgElement = document.createElement('img');
+			var imgElement = document.createElement('img');
 
-				imgElement.setAttribute("class","resize");
-				imgElement.src = "/danmojis/" + msgContentArray[i] + ".png"
+			imgElement.setAttribute("class","resize");
+			imgElement.src = msgContentArray[i];
 
-
-				//imgElement.height = "42";
-				//imgElement.width = "42";
-				messageElement.appendChild(imgElement);
-			}
+			messageElement.appendChild(imgElement);
 		}
 	}
 
@@ -149,6 +139,38 @@ function addStegs(emoji) {
 	var txt=document.getElementById("message").value; 
 	txt = txt + emoji; 
 	document.getElementById("message").value = txt; 
+}
+
+function loadDanmojis() { 
+//	var requestURL = 'localhost:8080/available';
+//	var request = new XMLHttpRequest();
+//	request.open('GET', requestURL);
+//	
+//	request.responseType = 'json';
+//	request.send();
+//	
+//	request.onload = function() {
+//	var danmojis = request.response;
+//	
+//	for (var j = 0; j < danmojis.length; j++) {
+//	      var listItem = document.createElement('li');
+//	      listItem.textContent = danmojis[j];
+//	      document.getElementById("danmoji-select").appendChild(listItem);
+//	}
+	
+	//for all /available danmojis {
+	var inputDan = document.createElement("INPUT");
+
+	var danString = "partyDan"
+	inputDan.setAttribute("type", "image");
+	inputDan.setAttribute("src", "/thumbs/" + danString + "_thumb.png");
+	inputDan.setAttribute("value", ":" + danString + ":");
+	inputDan.setAttribute("name", "no");
+	inputDan.setAttribute("onclick", "addStegs(this.value)");
+
+	document.getElementById("danmoji-select").appendChild(inputDan); 
+	//} end for all /available danmojis 
+	}
 } 
 
 usernameForm.addEventListener('submit', connect, true)
