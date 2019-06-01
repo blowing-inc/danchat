@@ -9,7 +9,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
 
@@ -34,10 +33,13 @@ public class ChatController {
 		// Filter messages for DanChat only
 		Pattern p = Pattern.compile(":([a-z]\\w+Dan):");
 		Matcher m = p.matcher(content);
-		
+
 		while(m.find()) {
-			logger.info("\trequested Danmoji: " + m.group(1));
-			filteredMessage += (m.group(1) + ",");
+			//Handling all filtering server-side. sending up valid image addresses.
+			if(availableDanMojis.keySet().contains(m.group(1))) {
+				logger.info("\trequested Danmoji: " + m.group(1));
+				filteredMessage += ("/danmojis/" + m.group(1) + ".png,");
+			}
 		}
 
 		if(filteredMessage.isEmpty()) {
