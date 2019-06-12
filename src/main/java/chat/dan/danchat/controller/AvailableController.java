@@ -1,5 +1,6 @@
 package chat.dan.danchat.controller;
 
+import chat.dan.danchat.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -12,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 @RestController
@@ -34,14 +32,19 @@ public class AvailableController {
 
 
     @RequestMapping(path="/danmojis/{param}", method=RequestMethod.GET)
-    public ResponseEntity<Resource> downloadDanmoji(@PathVariable(value="param") String param) throws IOException {
+    public ResponseEntity<Resource> downloadDanmoji(@PathVariable(value="param") String param) {
         String path = "danmojis/%s";
-        File file = new ClassPathResource(String.format(path, param)).getFile();
+        InputStream file = null;
+        try {
+            file = new ClassPathResource(String.format(path, param)).getInputStream();
+        } catch (IOException e) {
+            throw new ResourceNotFoundException();
 
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        }
+
+        InputStreamResource resource = new InputStreamResource(file);
 
         return ResponseEntity.ok()
-                .contentLength(file.length())
                 .contentType(MediaType.IMAGE_PNG)
                 .body(resource);
     }
