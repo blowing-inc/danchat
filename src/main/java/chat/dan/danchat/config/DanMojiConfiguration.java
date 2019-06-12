@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,17 +21,17 @@ public class DanMojiConfiguration {
 	private Map<String, String> availableDanMojis;
 
 	public DanMojiConfiguration() throws IOException {
-		File danMojisPathFile = danMojisPathResource.getFile();
-		List<File> availableDanMojiFiles = new ArrayList<>(Arrays.asList(danMojisPathFile.listFiles()));
-		this.availableDanMojis = new HashMap<>();
+		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+		Resource[] resources = resolver.getResources(danMojisPathResource.getFilename()+"/*");
 
+		this.availableDanMojis = new HashMap<>();
 		String pathTemplate = "/danmojis/%s";
 
-		logger.info(availableDanMojiFiles.size() + " available DanMojis");
-		for (File danMojiFile : availableDanMojiFiles) {
-			String danMoji = danMojiFile.getName().split("\\.(?=[^\\.]+$)")[0];
+		logger.info(resources.length + " available DanMojis");
+		for (Resource danMojiFile : resources) {
+			String danMoji = danMojiFile.getFilename().split("\\.(?=[^\\.]+$)")[0];
 			logger.info("  " + danMoji);
-			this.availableDanMojis.put(danMoji, String.format(pathTemplate, danMojiFile.getName()));
+			this.availableDanMojis.put(danMoji, String.format(pathTemplate, danMojiFile.getFilename()));
 		}
 	}
 
