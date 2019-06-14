@@ -145,19 +145,19 @@ function loadDanmojis() {
 //	var requestURL = 'localhost:8080/available';
 //	var request = new XMLHttpRequest();
 //	request.open('GET', requestURL);
-//	
+
 //	request.responseType = 'json';
 //	request.send();
-//	
+
 //	request.onload = function() {
 //	var danmojis = request.response;
-//	
+
 //	for (var j = 0; j < danmojis.length; j++) {
-//	      var listItem = document.createElement('li');
-//	      listItem.textContent = danmojis[j];
-//	      document.getElementById("danmoji-select").appendChild(listItem);
+//	var listItem = document.createElement('li');
+//	listItem.textContent = danmojis[j];
+//	document.getElementById("danmoji-select").appendChild(listItem);
 //	}
-	
+
 	//for all /available danmojis {
 	var inputDan = document.createElement("INPUT");
 
@@ -170,8 +170,8 @@ function loadDanmojis() {
 
 	document.getElementById("danmoji-select").appendChild(inputDan); 
 	//} end for all /available danmojis 
-	}
-} 
+}
+
 
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)
